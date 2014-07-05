@@ -101,7 +101,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("maxlength") - line.IndexOf("value") - 9;
-                        supp.Company = line.Substring(start, length);
+                        supp.Company = clean(line.Substring(start, length));
                     }
                 }
 
@@ -112,7 +112,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.ContactName = line.Substring(start, length);
+                        supp.ContactName = clean(line.Substring(start, length));
                     }
                 }
 
@@ -123,7 +123,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Address1 = line.Substring(start, length);
+                        supp.Address1 = clean(line.Substring(start, length));
                     }
                 }
 
@@ -134,7 +134,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 +7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Address2 = line.Substring(start, length);
+                        supp.Address2 = clean(line.Substring(start, length));
                     }
                 }
 
@@ -145,7 +145,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Address3 = line.Substring(start, length);
+                        supp.Address3 = clean(line.Substring(start, length));
                     }
                 }
 
@@ -156,7 +156,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.City = line.Substring(start, length);
+                        supp.City = clean(line.Substring(start, length));
                     }
                 }
 
@@ -167,7 +167,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.State = line.Substring(start, length);
+                        supp.State = clean(line.Substring(start, length));
                     }
                 }
 
@@ -178,7 +178,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.PostalCode = line.Substring(start, length);
+                        supp.PostalCode = clean(line.Substring(start, length));
                     }
                 }
 
@@ -189,7 +189,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Country = line.Substring(start, length);
+                        supp.Country = clean(line.Substring(start, length));
                     }
                 }
 
@@ -200,7 +200,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Day = line.Substring(start, length);
+                        supp.Day = clean(line.Substring(start, length));
                     }
                 }
 
@@ -211,7 +211,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Evening = line.Substring(start, length);
+                        supp.Evening = clean(line.Substring(start, length));
                     }
                 }
 
@@ -222,7 +222,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Fax = line.Substring(start, length);
+                        supp.Fax = clean(line.Substring(start, length));
                     }
                 }
 
@@ -233,7 +233,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Email = line.Substring(start, length);
+                        supp.Email = clean(line.Substring(start, length));
                     }
                 }
 
@@ -244,7 +244,7 @@ namespace StoresOnlineSupplierExtractor
                     if (start > (-1 + 7))
                     {
                         int length = line.IndexOf("type") - line.IndexOf("value") - 9;
-                        supp.Subject = line.Substring(start, length);
+                        supp.Subject = clean(line.Substring(start, length));
                     }
                 }
 
@@ -280,7 +280,7 @@ namespace StoresOnlineSupplierExtractor
 
                     if (!string.IsNullOrEmpty(strNotes))
                     {
-                        supp.Notes = strNotes;
+                        supp.Notes = clean(strNotes);
                     }
                 }
 
@@ -316,7 +316,7 @@ namespace StoresOnlineSupplierExtractor
 
                     if (!string.IsNullOrEmpty(strInstructions))
                     {
-                        supp.Message = strInstructions;
+                        supp.Message = clean(strInstructions);
                     }
                 }
 
@@ -337,6 +337,19 @@ namespace StoresOnlineSupplierExtractor
                 logResults("ERROR: No supplier found in " + filePath);
                 logResults("@@@@@@@@@@");
             }
+        }
+
+        private string clean(string strInput)
+        {
+            string strOutput = strInput;
+
+            //Replace &#39; with '
+            strOutput = strOutput.Replace("&#39;", "'");
+
+            //Replace &amp; with &
+            strOutput = strOutput.Replace("&amp;", "&");
+
+            return strOutput;
         }
     }
 }
